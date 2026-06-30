@@ -1,0 +1,1 @@
+from app.infraestructure.user_repository_sqlachemy import SQLAlchemyUserRepository as SQLAlchemyUserRepository
