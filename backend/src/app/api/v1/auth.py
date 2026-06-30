@@ -8,6 +8,7 @@ from app.domain.schemas.user import (
 )
 from app.service.user_service import UserService
 from app.api.deps import get_user_service
+from app.core.security import CurrentUser
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
 

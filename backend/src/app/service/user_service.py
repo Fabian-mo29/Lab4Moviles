@@ -26,7 +26,7 @@ class UserService:
 
         new_user = await self.repository.create(new_user)
         
-        return UserProfileResponseDTO.model_validate(User)
+        return UserProfileResponseDTO.model_validate(new_user)
     
 
     async def login(self, dto: LoginRequestDTO):
