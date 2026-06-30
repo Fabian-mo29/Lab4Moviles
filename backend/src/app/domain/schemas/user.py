@@ -22,3 +22,7 @@ class UserProfileResponseDTO(BaseModel):
     job: str | None
     provider: str
     created_at: datetime
+
+class TokenResponseDTO(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
