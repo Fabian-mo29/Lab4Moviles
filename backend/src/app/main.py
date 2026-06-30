@@ -5,10 +5,17 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.settings import settings
 from app.api.v1 import api_router
+from app.core.database import Base, engine
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     print(f"Starting {settings.APP_NAME} v{settings.APP_VERSION}")
+
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+
+
     yield
     print("Shutting down...")
 
@@ -36,5 +43,5 @@ def create_app() -> FastAPI:
 app = create_app()
 
 @app.get("/health")
-def health():
+async def health():
     return { "status": "Healthy" }
