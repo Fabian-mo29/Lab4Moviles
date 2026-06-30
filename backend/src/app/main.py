@@ -1,12 +1,15 @@
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.settings import settings
 from app.api.v1 import api_router
 from app.core.database import Base, engine
 
+from fastapi.responses import JSONResponse
+
+from app.core.exception_handlers import register_exception_handlers
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -18,6 +21,7 @@ async def lifespan(app: FastAPI):
 
     yield
     print("Shutting down...")
+
 
 def create_app() -> FastAPI:
     app = FastAPI(
@@ -41,6 +45,8 @@ def create_app() -> FastAPI:
  
  
 app = create_app()
+
+register_exception_handlers(app)
 
 @app.get("/health")
 async def health():

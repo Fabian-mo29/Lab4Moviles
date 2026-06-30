@@ -8,14 +8,14 @@ from app.domain.schemas.user import (
 from app.service.user_service import UserService
 from app.api.deps import get_user_service
 
-router = APIRouter(prefix="/user", tags=["User"])
+router = APIRouter(prefix="/auth", tags=["Auth"])
 
 @router.post("/register", status_code=201)
 async def register(
     dto: RegisterRequestDTO,
     service: UserService = Depends(get_user_service) 
 ):
-    return
+    return service.register(dto)
     
 @router.post("/login", status_code=200)
 async def login(
@@ -26,6 +26,7 @@ async def login(
 
 @router.get("/profile", response_model=UserProfileResponseDTO, status_code=200)
 async def get_profile(
+
     service: UserService = Depends(get_user_service) 
 ):
     return
